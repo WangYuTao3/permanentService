@@ -31,12 +31,6 @@ public class NgdsLog {
 
     protected static NgdsLogFileHandler sNgdsLogHandler;
 
-    /**
-     * 初始化日志本地化输出渠道(调用此方法后日志将输出到文件中)
-     *
-     * @param context
-     * @param logFileName 请用模块名称加上版本号作为唯一文件名
-     */
     public static void initFileLoger(Context context, String logFileName) {
         sNgdsLogHandler = NgdsLogFileHandler.getInstance();
         sNgdsLogHandler.init(context, logFileName);

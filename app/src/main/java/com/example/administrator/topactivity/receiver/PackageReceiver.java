@@ -4,8 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import com.example.administrator.topactivity.service.CheckService;
-import com.example.administrator.topactivity.service.CheckService2;
+import com.example.administrator.topactivity.service.DaemonService;
 import com.example.administrator.topactivity.utils.log.NgdsLog;
 
 /**
@@ -24,9 +23,7 @@ public class PackageReceiver extends BroadcastReceiver {
             return;
         }
         NgdsLog.e(TAG, "Package change");
-        Intent startIntent = new Intent(context, CheckService.class);
+        Intent startIntent = new Intent(context, DaemonService.class);
         context.startService(startIntent);
-        Intent startIntent2 = new Intent(context, CheckService2.class);
-        context.startService(startIntent2);
     }
 }

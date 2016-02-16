@@ -4,13 +4,12 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import com.example.administrator.topactivity.service.CheckService;
-import com.example.administrator.topactivity.service.CheckService2;
+import com.example.administrator.topactivity.service.DaemonService;
 import com.example.administrator.topactivity.utils.log.NgdsLog;
 
 /**
  * Created by wangyt on 2016/1/29.
- * : 网络变化接收
+ * :
  */
 public class ConnectReceiver extends BroadcastReceiver {
     private static final String TAG = "ConnectReceiver";
@@ -24,9 +23,7 @@ public class ConnectReceiver extends BroadcastReceiver {
             return;
         }
         NgdsLog.e(TAG, "connectivity change");
-        Intent startIntent = new Intent(context, CheckService.class);
+        Intent startIntent = new Intent(context, DaemonService.class);
         context.startService(startIntent);
-        Intent startIntent2 = new Intent(context, CheckService2.class);
-        context.startService(startIntent2);
     }
 }

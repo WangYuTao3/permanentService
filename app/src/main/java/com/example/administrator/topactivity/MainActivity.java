@@ -6,7 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
-import com.example.administrator.topactivity.service.CheckService;
+import com.example.administrator.topactivity.service.DaemonService;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     Button mBtnStartService;
@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.button:
-                Intent intent = new Intent(this, CheckService.class);
+                Intent intent = new Intent(this, DaemonService.class);
                 startService(intent);
                 break;
         }

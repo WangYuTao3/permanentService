@@ -17,12 +17,10 @@ import java.util.List;
 
 /**
  * NgdsLogHandler
- * 处理将日志写入文件的工作
  */
 public class NgdsLogFileHandler {
     private final static String TAG = "NgdsLogFileHandler";
 
-    //防止日志丢失,采用两个日志文件轮流进行写入
     private static File mLogFilePartOne;
     private static File mLogFilePartTwo;
     private static File mCurrentLogFile;
@@ -121,7 +119,7 @@ public class NgdsLogFileHandler {
                 }
                 nextend--;
                 rf.seek(nextend);
-                if (nextend == 0) {// 当文件指针退至文件开始处，输出第一行
+                if (nextend == 0) {
                     return rf.readLine();
                 }
             }
@@ -184,11 +182,7 @@ public class NgdsLogFileHandler {
         initFileWriter();
     }
 
-    /**
-     * 获取还剩下多少能可用的存储空间
-     *
-     * @return
-     */
+
     private static long getAvailableExternalMemorySize() {
         File path = Environment.getExternalStorageDirectory();
         StatFs stat = new StatFs(path.getPath());

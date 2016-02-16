@@ -11,10 +11,10 @@ import com.example.administrator.topactivity.utils.log.NgdsLog;
 
 /**
  * Created by wangyt on 2015/11/30.
- * : 守护进程2
+ * :
  */
-public class CheckService2 extends Service {
-    private static final String TAG = "CheckService2";
+public class MyService extends Service {
+    private static final String TAG = "MyService";
 
     private static final int MSG_HANDLE_CHECK = 1;
 
@@ -26,12 +26,12 @@ public class CheckService2 extends Service {
         NgdsLog.initFileLoger(this, TAG);
         NgdsLog.e(TAG, "onCreate");
         mHandler = new HandleRun();
+        mHandler.sendEmptyMessage(MSG_HANDLE_CHECK);
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         NgdsLog.e(TAG, "onStartCommand");
-        mHandler.sendEmptyMessage(MSG_HANDLE_CHECK);
         return START_STICKY;
     }
 
@@ -48,10 +48,10 @@ public class CheckService2 extends Service {
     }
 
     private void handleCheck() {
-        if (!Utils.isServiceRunning(this, CheckService.class.getName())) {
-            startService(new Intent(this, CheckService.class));
-        }
-        mHandler.sendEmptyMessageDelayed(MSG_HANDLE_CHECK, 1000);
+        NgdsLog.e(TAG, "check");
+        if (!Utils.isServiceRunning(this, DaemonService.class.getName()))
+            startService(new Intent(this, DaemonService.class));
+        mHandler.sendEmptyMessageDelayed(MSG_HANDLE_CHECK, 1000 * 60);
     }
 
     class HandleRun extends Handler {

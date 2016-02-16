@@ -17,7 +17,6 @@
     <uses-permission android:name="android.permission.BROADCAST_STICKY" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
-
     <application
         android:allowBackup="true"
         android:excludeFromRecents="true"
@@ -37,29 +36,16 @@
         </activity>
 
         <service
-            android:name=".service.CheckService"
+            android:name=".service.DaemonService"
             android:excludeFromRecents="true"
             android:priority="0x7fffffff"
-            android:process=":check" />
+            android:process=":daemon" />
 
         <service
-            android:name=".service.CheckService2"
+            android:name=".service.MyService"
             android:excludeFromRecents="true"
             android:priority="0x7fffffff"
-            android:process=":check2" />
-
-        <service
-            android:name=".service.HookService"
-            android:excludeFromRecents="true"
-            android:label="检测组件"
-            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
-            <intent-filter android:priority="0x7fffffff">
-                <action android:name="android.accessibilityservice.AccessibilityService" />
-            </intent-filter>
-            <meta-data
-                android:name="android.accessibilityservice"
-                android:resource="@xml/accessibility_service_config" />
-        </service>
+            android:process=":check"/>
 
 
         <receiver
@@ -117,7 +103,6 @@
                 <action android:name="android.intent.action.MEDIA_REMOVED" />
                 <action android:name="android.intent.action.MEDIA_CHECKING" />
                 <action android:name="android.intent.action.MEDIA_EJECT" />
-
                 <data android:scheme="file" />
             </intent-filter>
             <intent-filter android:priority="0x7fffffff">

@@ -18,7 +18,7 @@ import android.text.TextUtils;
 import com.example.administrator.topactivity.Const;
 import com.example.administrator.topactivity.R;
 import com.example.administrator.topactivity.receiver.AlarmReceiver;
-import com.example.administrator.topactivity.service.CheckService2;
+import com.example.administrator.topactivity.service.DaemonService;
 import com.example.administrator.topactivity.utils.log.NgdsLog;
 
 import java.io.File;
@@ -34,15 +34,9 @@ import java.util.List;
  */
 public class Utils {
 
-    /**
-     * 添加常驻状态栏notification
-     *
-     * @param context
-     * @return
-     */
     public static void addNotification(Context context) {
         Intent intent = new Intent();
-        intent.setClass(context, CheckService2.class);
+        intent.setClass(context, DaemonService.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
         NotificationManager nm = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
@@ -63,13 +57,6 @@ public class Utils {
         nm.notify(R.mipmap.ic_launcher, mBuilder.build());
     }
 
-    /**
-     * 检测开机启动是否被禁用
-     *
-     * @param context
-     * @param packageName
-     * @return
-     */
     public static boolean isEnableBootFromPackageName(Context context, String packageName) {
         Intent intent = new Intent("android.intent.action.BOOT_COMPLETED");
         List<ResolveInfo> list = context.getPackageManager().queryBroadcastReceivers(intent, 0);
@@ -81,13 +68,6 @@ public class Utils {
         return false;
     }
 
-    /**
-     * 设置闹钟
-     *
-     * @param appContext
-     * @param repeatPeroid
-     * @return
-     */
     public static PendingIntent startAlarmAndgetIntent(Context appContext, long repeatPeroid) {
         AlarmManager alarmMgr;
         PendingIntent alarmIntent;
@@ -104,12 +84,6 @@ public class Utils {
         return alarmIntent;
     }
 
-    /**
-     * 类名判断服务是否开启
-     *
-     * @param serviceClassName
-     * @return
-     */
     public static boolean isServiceRunning(Context context, String serviceClassName) {
         final ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
         final List<ActivityManager.RunningServiceInfo> services = activityManager.getRunningServices(Integer.MAX_VALUE);
@@ -122,13 +96,6 @@ public class Utils {
         return false;
     }
 
-    /**
-     * 判断Access服务是否开启
-     *
-     * @param context
-     * @param name
-     * @return
-     */
     public static boolean isAccessibilityEnabled(Context context, String name) {
         int accessibilityEnabled = 0;
         boolean accessibilityFound = false;
@@ -156,7 +123,6 @@ public class Utils {
         return accessibilityFound;
     }
 
-    //一下无用
     public static String getTopActPkgNameFromProcess(Context context) {
         ActivityManager.RunningAppProcessInfo currentInfo = null;
         Field field = null;
@@ -210,6 +176,7 @@ public class Utils {
         return result;
     }
 
+    //useless
     private static synchronized String run(String[] cmd, String workdirectory)
             throws IOException {
         StringBuffer result = new StringBuffer();
