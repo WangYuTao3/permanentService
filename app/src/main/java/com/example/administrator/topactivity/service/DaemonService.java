@@ -1,12 +1,10 @@
 package com.example.administrator.topactivity.service;
 
 import android.app.Service;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
-import android.os.PowerManager;
 
 import com.example.administrator.topactivity.utils.Utils;
 import com.example.administrator.topactivity.utils.log.NgdsLog;
@@ -22,8 +20,7 @@ public class DaemonService extends Service {
 
     private static Handler mHandler;
 
-    private PowerManager.WakeLock mWakeLock;
-
+//    private PowerManager.WakeLock mWakeLock;
 
     @Override
     public void onCreate() {
@@ -32,9 +29,9 @@ public class DaemonService extends Service {
         NgdsLog.e(TAG, "onCreate");
         mHandler = new HandleRun();
         mHandler.sendEmptyMessage(MSG_HANDLE_CHECK);
-        mWakeLock = ((PowerManager) getSystemService(Context.POWER_SERVICE))
-                .newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "daemon service");
-        mWakeLock.setReferenceCounted(false);
+//        mWakeLock = ((PowerManager) getSystemService(Context.POWER_SERVICE))
+//                .newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "daemon service");
+//        mWakeLock.setReferenceCounted(false);
         Utils.addNotification(this);
         Utils.startAlarmAndgetIntent(this, 1000 * 60);
     }
@@ -55,7 +52,7 @@ public class DaemonService extends Service {
     public void onDestroy() {
         super.onDestroy();
         //fix leak
-        mWakeLock.release();
+//        mWakeLock.release();
         mHandler.removeMessages(MSG_HANDLE_CHECK);
         NgdsLog.e(TAG, "onDestroy");
     }
@@ -74,7 +71,7 @@ public class DaemonService extends Service {
 
     private void handleCheck() {
         NgdsLog.e(TAG, "check");
-        mWakeLock.acquire(1000 * 20);
+//        mWakeLock.acquire(1000 * 20);
         if (!Utils.isServiceRunning(this, MyService.class.getName()))
             startService(new Intent(this, MyService.class));
         mHandler.sendEmptyMessageDelayed(MSG_HANDLE_CHECK, 1000 * 60);
