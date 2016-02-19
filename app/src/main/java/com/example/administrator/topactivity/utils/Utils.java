@@ -10,16 +10,15 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.os.Environment;
-import android.os.SystemClock;
 import android.provider.Settings;
 import android.support.v7.app.NotificationCompat;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.example.administrator.topactivity.Const;
 import com.example.administrator.topactivity.R;
 import com.example.administrator.topactivity.receiver.AlarmReceiver;
 import com.example.administrator.topactivity.service.DaemonService;
-import com.example.administrator.topactivity.utils.log.NgdsLog;
 
 import java.io.File;
 import java.io.IOException;
@@ -44,7 +43,7 @@ public class Utils {
         restartNotification.setAction(Const.NOTIFICATION_BEAT_ACTION);
 
         PendingIntent reNotiflyPIntent = PendingIntent.getBroadcast(
-                context, 0, restartNotification, PendingIntent.FLAG_ONE_SHOT);
+                context, 0, restartNotification, PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context);
         mBuilder.setContentTitle("test")
@@ -68,16 +67,15 @@ public class Utils {
         return false;
     }
 
-    public static PendingIntent startAlarmAndgetIntent(Context appContext, long repeatPeroid) {
+    public static PendingIntent startAndGetBroadcastAlarm(Context appContext, long repeatPeroid) {
         AlarmManager alarmMgr;
         PendingIntent alarmIntent;
         alarmMgr = (AlarmManager) appContext.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(appContext, AlarmReceiver.class);
         intent.setAction(Const.HEART_BEAT_ACTION);
-        alarmIntent = PendingIntent.getBroadcast(appContext, 0, intent, 0);
+        alarmIntent = PendingIntent.getBroadcast(appContext, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         try {
-            alarmMgr.setRepeating(
-                    AlarmManager.ELAPSED_REALTIME_WAKEUP, SystemClock.elapsedRealtime(), repeatPeroid, alarmIntent);
+            alarmMgr.set(AlarmManager.RTC_WAKEUP, repeatPeroid, alarmIntent);
         } catch (Exception e) {
             throw new IllegalStateException(e);
         }
@@ -217,9 +215,9 @@ public class Utils {
             ResolveInfo resolveInfo = (ResolveInfo) method.invoke(packageManager, intent, PackageManager.GET_INTENT_FILTERS);
             if (resolveInfo != null) {
                 result = resolveInfo.activityInfo.name;
-                NgdsLog.e("wyt", "className:" + result);
+                Log.e("wyt", "className:" + result);
             } else {
-                NgdsLog.e("wyt", "componentName null");
+                Log.e("wyt", "componentName null");
             }
         } catch (Exception e) {
             e.printStackTrace();

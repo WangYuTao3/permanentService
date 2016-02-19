@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.example.administrator.topactivity.service.DaemonService;
-import com.example.administrator.topactivity.utils.log.NgdsLog;
+import com.example.administrator.topactivity.utils.FileUtil;
 
 /**
  * Created by wangyt on 2016/1/29.
@@ -16,13 +16,12 @@ public class BootReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        NgdsLog.initFileLoger(context, TAG);
         String action = intent.getAction();
         if (null == action) {
-            NgdsLog.e(TAG, "action is null");
+            FileUtil.writeLogtoSdcard(TAG, "action is null");
             return;
         }
-        NgdsLog.e(TAG, "system booted");
+        FileUtil.writeLogtoSdcard(TAG, "system booted");
         Intent startIntent = new Intent(context, DaemonService.class);
         context.startService(startIntent);
     }

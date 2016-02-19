@@ -16,6 +16,8 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.BROADCAST_STICKY" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
+
 
     <application
         android:allowBackup="true"
@@ -39,20 +41,18 @@
             android:name=".service.DaemonService"
             android:excludeFromRecents="true"
             android:priority="0x7fffffff"
-            android:process=":daemon" />
+            android:process=":daemon"
+            android:showOnLockScreen="true" />
 
         <service
             android:name=".service.MyService"
             android:excludeFromRecents="true"
-            android:priority="0x7fffffff"
-            android:process=":check"/>
-
+            android:priority="0x7fffffff" />
 
         <receiver
             android:name=".receiver.AlarmReceiver"
             android:enabled="true"
-            android:excludeFromRecents="true"
-            android:process=":check">
+            android:excludeFromRecents="true">
             <intent-filter android:priority="0x7fffffff">
                 <action android:name="com.wyt.android.intent.ALARM" />
                 <action android:name="com.wyt.android.intent.NOTIFICATIOIN" />
@@ -62,8 +62,7 @@
         <receiver
             android:name=".receiver.PackageReceiver"
             android:enabled="true"
-            android:excludeFromRecents="true"
-            android:process=":check">
+            android:excludeFromRecents="true">
             <intent-filter android:priority="0x7fffffff">
                 <action android:name="android.intent.action.PACKAGE_ADDED" />
                 <action android:name="android.intent.action.PACKAGE_CHANGED" />
@@ -78,8 +77,7 @@
         <receiver
             android:name=".receiver.BootReceiver"
             android:enabled="true"
-            android:excludeFromRecents="true"
-            android:process=":check">
+            android:excludeFromRecents="true">
             <intent-filter android:priority="0x7fffffff">
                 <action android:name="android.intent.action.USER_PRESENT" />
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
@@ -89,8 +87,7 @@
         <receiver
             android:name=".receiver.ConnectReceiver"
             android:enabled="true"
-            android:excludeFromRecents="true"
-            android:process=":check">
+            android:excludeFromRecents="true">
             <intent-filter android:priority="0x7fffffff">
                 <action android:name="android.bluetooth.adapter.action.STATE_CHANGED" />
                 <action android:name="android.net.wifi.WIFI_STATE_CHANGED" />
@@ -103,6 +100,7 @@
                 <action android:name="android.intent.action.MEDIA_REMOVED" />
                 <action android:name="android.intent.action.MEDIA_CHECKING" />
                 <action android:name="android.intent.action.MEDIA_EJECT" />
+
                 <data android:scheme="file" />
             </intent-filter>
             <intent-filter android:priority="0x7fffffff">

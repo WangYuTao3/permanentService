@@ -1,5 +1,6 @@
 <resources>
-    <string name="app_name">TopActivity</string>
+    <!--<string name="app_name">daemonWithLock</string>-->
+    <string name="app_name">daemon</string>
     <string name="accessibility_service_name">MyService</string>
     <string name="accessibility_service_description">TopActivity检测组件</string>
 </resources>

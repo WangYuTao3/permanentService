@@ -6,6 +6,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.administrator.topactivity"
+//        applicationId "com.example.administrator.topactivity.wakelock"
         minSdkVersion 16
         targetSdkVersion 22
         versionCode 1

@@ -6,8 +6,8 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.os.Message;
 
+import com.example.administrator.topactivity.utils.FileUtil;
 import com.example.administrator.topactivity.utils.Utils;
-import com.example.administrator.topactivity.utils.log.NgdsLog;
 
 /**
  * Created by wangyt on 2015/11/30.
@@ -23,15 +23,14 @@ public class MyService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        NgdsLog.initFileLoger(this, TAG);
-        NgdsLog.e(TAG, "onCreate");
+        FileUtil.writeLogtoSdcard(TAG, "onCreate");
         mHandler = new HandleRun();
         mHandler.sendEmptyMessage(MSG_HANDLE_CHECK);
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        NgdsLog.e(TAG, "onStartCommand");
+        FileUtil.writeLogtoSdcard(TAG, "onStartCommand");
         return START_STICKY;
     }
 
@@ -44,11 +43,11 @@ public class MyService extends Service {
     public void onDestroy() {
         super.onDestroy();
         mHandler.removeMessages(MSG_HANDLE_CHECK);
-        NgdsLog.e(TAG, "onDestroy");
+        FileUtil.writeLogtoSdcard(TAG, "onDestroy");
     }
 
     private void handleCheck() {
-        NgdsLog.e(TAG, "check");
+        FileUtil.writeLogtoSdcard(TAG, "check");
         if (!Utils.isServiceRunning(this, DaemonService.class.getName()))
             startService(new Intent(this, DaemonService.class));
         mHandler.sendEmptyMessageDelayed(MSG_HANDLE_CHECK, 1000 * 60);
