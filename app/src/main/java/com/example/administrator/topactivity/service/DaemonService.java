@@ -27,7 +27,7 @@ public class DaemonService extends Service {
     @Override
     public void onCreate() {
         super.onCreate();
-        FileUtil.writeLogtoSdcard(TAG, "onCreate",true);
+        FileUtil.writeLogtoSdcard(TAG, "onCreate", true);
         mHandler = new HandleRun();
         mHandler.sendEmptyMessage(MSG_HANDLE_CHECK);
 
@@ -35,14 +35,13 @@ public class DaemonService extends Service {
                 .newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "daemon service");
         mWakeLock.setReferenceCounted(false);
         Utils.addNotification(this);
-//        Utils.startAndGetServiceAlarm(this, 1000 * 60);
         Utils.startAndGetBroadcastAlarm(this, 1000 * 60);
     }
 
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        FileUtil.writeLogtoSdcard(TAG, "onStartCommand",true);
+        FileUtil.writeLogtoSdcard(TAG, "onStartCommand", true);
         Utils.addNotification(this);
         return START_STICKY;
     }
@@ -58,7 +57,7 @@ public class DaemonService extends Service {
         //fix leak
         mWakeLock.release();
         mHandler.removeMessages(MSG_HANDLE_CHECK);
-        FileUtil.writeLogtoSdcard(TAG, "onDestroy",true);
+        FileUtil.writeLogtoSdcard(TAG, "onDestroy", true);
         startService(new Intent(this, DaemonService.class));
     }
 
@@ -75,7 +74,7 @@ public class DaemonService extends Service {
     }
 
     private void handleCheck() {
-        FileUtil.writeLogtoSdcard(TAG, "check",true);
+        FileUtil.writeLogtoSdcard(TAG, "check", true);
         mWakeLock.acquire(1000 * 60);
         if (!Utils.isServiceRunning(this, MyService.class.getName()))
             startService(new Intent(this, MyService.class));

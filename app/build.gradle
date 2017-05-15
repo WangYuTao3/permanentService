@@ -2,11 +2,10 @@ apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 22
-    buildToolsVersion "23.0.2"
+    buildToolsVersion '25.0.0'
 
     defaultConfig {
         applicationId "com.example.administrator.topactivity"
-//        applicationId "com.example.administrator.topactivity.wakelock"
         minSdkVersion 16
         targetSdkVersion 22
         versionCode 1

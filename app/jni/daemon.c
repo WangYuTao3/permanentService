@@ -72,7 +72,7 @@ JNIEXPORT void JNICALL Java_com_example_administrator_topactivity_service_Daemon
 				// 应用没有被卸载
 				LOGD("app run normal");
 			}
-			sleep(1);
+			sleep(100);
 		}
 	}
 
